@@ -1,16 +1,18 @@
 const express = require('express');
 const bodyParser= require('body-parser');
 const app= express();
+const cors=require('cors');
 
 app.use(bodyParser.json());
+app.use(cors());
 
 const database = {
 	users: [
 		{
 			id: '123',
 			name: 'John',
-			email: 'john@gmail.com',
-			password: 'cookies',
+			email: '1',
+			password: '1',
 			entries: 0,
 			joined: new Date()
 		},
@@ -53,19 +55,20 @@ app.get('/profile/:id', (req,res) => {
 	return res.status(400).json("Not found");
 })
 app.post('/image', (req,res) => {
-	const {id}=req.body;
-	database.users.forEach(user => {
-		if(user.id===id) {
+	//const {id}=req.body
+	database.users.forEach(user => {	
+		return res.json(req.body.id);
+		if(user.id === id) {
 			user.entries++;
 			return res.json(user.entries);
 		}
 	})
-	return res.status(400).json("Not found");
+	return res.status(400).json("Not image found");
 })
 
 app.post('/signin',(req,res) => {
-	if(req.body.name===database.users[0].name && req.body.password===database.users[0].password) {
-		res.json('success');
+	if(req.body.email===database.users[0].email || req.body.password===database.users[0].password) {
+		res.json(database.users[0]);
 	}
 	else {
 		res.status(400).json("not found");
