@@ -54,10 +54,9 @@ app.get('/profile/:id', (req,res) => {
 	})
 	return res.status(400).json("Not found");
 })
-app.post('/image', (req,res) => {
-	//const {id}=req.body
+app.put('/image', (req,res) => {
+	const {id}=req.body;
 	database.users.forEach(user => {	
-		return res.json(req.body.id);
 		if(user.id === id) {
 			user.entries++;
 			return res.json(user.entries);
